@@ -1,21 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
-export const theme = {
-  text: '#333333',
-  textMuted: '#707070',
-  background: '#f9fbfd',
-  primary: '#7267EF',
-  primaryLight: '#F5ECFF',
-  secondary: 'red',
-  secondaryLight: 'red',
-  success: '#48c774',
-  successLight: '#effaf3',
-  danger: '#f14668',
-  dangerLight: '#FFF9FF',
-  boxShadow: '0 0.75rem 1.5rem rgba(18 38 63 / 3%)',
-};
-
 export default createGlobalStyle`
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
   * {
     padding: 0;
     margin: 0;
@@ -29,7 +15,7 @@ export default createGlobalStyle`
 
   html, body, #root {
     min-height: 100%;
-    font-family: "Nunito", sans-serif;
+    font-family: 'Montserrat', sans-serif;
     background: white;
   }
 

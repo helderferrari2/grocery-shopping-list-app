@@ -17,12 +17,12 @@ export const Content = styled.div`
     max-width: 45px;
     max-height: 45px;
     object-fit: contain;
-    margin-bottom: 10px;
+    margin-bottom: ${({ theme }) => theme.spacing.margin};
   }
 
   p {
     font-size: 14px;
-    margin-bottom: 10px;
+    margin-bottom: ${({ theme }) => theme.spacing.margin};
   }
 
   form {
@@ -31,22 +31,22 @@ export const Content = styled.div`
 
     input {
       border: none;
-      background: #f3f4f8;
-      margin-bottom: 10px;
+      background: rgba(232, 240, 254);
+      margin-bottom: ${({ theme }) => theme.spacing.margin};
       border-radius: 20px;
       height: 44px;
       padding: 0 15px;
 
       &:focus {
-        border: 2px solid #7267ef;
+        /* border: 2px solid ${({ theme }) => theme.colors.primary}; */
       }
     }
 
     button {
       border: none;
-      background: #7267ef;
-      color: #f3f4f8;
-      margin-bottom: 10px;
+      background: ${({ theme }) => theme.colors.primary};
+      color: ${({ theme }) => theme.colors.background};
+      margin-bottom: ${({ theme }) => theme.spacing.margin};
       border-radius: 20px;
       height: 44px;
       padding: 0 15px;
@@ -55,13 +55,13 @@ export const Content = styled.div`
       transition: background 0.2s;
 
       &:hover {
-        background: ${darken(0.03, '#7267ef')};
+        background: ${darken(0.03, '#7267EF')};
       }
     }
   }
 
   a {
-    color: #333;
+    color: ${({ theme }) => theme.colors.text};
     opacity: 0.8;
 
     &:hover {

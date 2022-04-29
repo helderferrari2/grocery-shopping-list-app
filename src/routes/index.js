@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom';
-import Route from './RouteMiddleware';
+import { Switch } from 'react-router-dom';
+import Route from './RouteWrapper';
 
 import SignIn from '../pages/signIn';
 import SignUp from '../pages/signUp';
@@ -10,15 +10,13 @@ import NotFound from '../pages/error';
 
 export default function Routes() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={SignIn} />
-        <Route exact path="/register" component={SignUp} />
-        <Route exact path="/home" isPrivate component={Home} />
-        <Route exact path="/list" isPrivate component={List} />
-        <Route component={NotFound} />
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <Route exact path="/" component={SignIn} />
+      <Route path="/login" component={SignIn} />
+      <Route path="/register" component={SignUp} />
+      <Route path="/home" isPrivate component={Home} />
+      <Route path="/list" isPrivate component={List} />
+      <Route component={NotFound} />
+    </Switch>
   );
 }

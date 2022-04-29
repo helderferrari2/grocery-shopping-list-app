@@ -1,9 +1,9 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import AuthLayout from '../pages/_layouts/auth';
 import DefaultLayout from '../pages/_layouts/default';
 
-export default function RouteMiddleware({
+export default function RouteWrapper({
   component: Component,
   isPrivate = false,
   ...rest
