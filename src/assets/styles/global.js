@@ -21,6 +21,12 @@ export default createGlobalStyle`
 
   a {
     text-decoration: none;
+    opacity: 0.8;
+    color: ${({ theme: { colors } }) => colors.text};
+
+    &:hover {
+      opacity: 1;
+    }
   }
 
   ul {

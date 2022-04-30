@@ -1,22 +1,20 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  padding-right: 15px;
-  padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
 
   @media (min-width: 768px) {
     width: 750px;
-    padding-right: 0;
-    padding-left: 0;
-    margin-right: auto;
-    margin-left: auto;
   }
   @media (min-width: 992px) {
     width: 970px;
+    padding-right: 15px;
+    padding-left: 15px;
   }
   @media (min-width: 1200px) {
     width: 1170px;
+    padding-right: 15px;
+    padding-left: 15px;
   }
 `;

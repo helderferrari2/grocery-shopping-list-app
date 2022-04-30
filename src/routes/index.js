@@ -15,7 +15,7 @@ export default function Routes() {
       <Route path="/login" component={SignIn} />
       <Route path="/register" component={SignUp} />
       <Route path="/home" isPrivate component={Home} />
-      <Route path="/list" isPrivate component={List} />
+      <Route path="/list/:list_id" isPrivate component={List} />
       <Route component={NotFound} />
     </Switch>
   );

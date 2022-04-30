@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-  /* background-color: blue; */
-`;
+export const Wrapper = styled.div``;
 
 export const Content = styled.div`
-  margin: 30px;
+  margin: 0 20px;
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { FiArrowLeft, FiPlus } from 'react-icons/fi';
-import { Nav, NavItem, AddListButton } from './styles';
+import { Nav, NavItem } from './styles';
 
 export default function Header() {
   const location = useLocation();
@@ -16,9 +16,9 @@ export default function Header() {
         <h2>{title}</h2>
       </NavItem>
       <NavItem position="flex-end">
-        <AddListButton>
+        <Link to="/lists">
           <FiPlus />
-        </AddListButton>
+        </Link>
       </NavItem>
     </Nav>
   );

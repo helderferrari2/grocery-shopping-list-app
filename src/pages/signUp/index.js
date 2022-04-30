@@ -1,7 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 export default function SignUp() {
+  const handleSubmit = () => {
+    alert('clicou');
+  };
+
   return (
     <>
       <img
@@ -10,11 +16,11 @@ export default function SignUp() {
       />
       <h1>Go Grocery</h1>
       <p>Sua lista de compras online</p>
-      <form>
-        <input type="text" placeholder="Digite seu nome" />
-        <input type="email" placeholder="Digite seu e-mail" />
-        <input type="password" placeholder="Digite sua senha" />
-        <button type="submit">Cadastrar</button>
+      <form onSubmit={handleSubmit}>
+        <Input type="text" name="name" placeholder="Digite seu nome" />
+        <Input type="email" name="email" placeholder="Digite seu e-mail" />
+        <Input type="password" name="password" placeholder="Digite sua senha" />
+        <Button type="submit">Entrar</Button>
       </form>
 
       <Link to="/login">Já possui uma conta? Entrar</Link>

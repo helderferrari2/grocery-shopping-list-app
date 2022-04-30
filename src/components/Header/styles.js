@@ -4,7 +4,25 @@ export const Nav = styled.div`
   display: flex;
   justify-content: space-between;
   height: 70px;
-  padding: 0 30px;
+  padding: 0 20px;
+
+  a {
+    opacity: 0.8;
+    color: ${({ theme }) => theme.colors.primary};
+    background: ${({ theme: { colors } }) => colors.primaryLight};
+    border-radius: 50%;
+    padding: 2px;
+
+    > svg {
+      width: 20px;
+      height: 20px;
+      vertical-align: text-bottom;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 `;
 
 export const NavItem = styled.div`
@@ -12,13 +30,4 @@ export const NavItem = styled.div`
   justify-content: ${(props) => props.position || 'center'};
   align-items: center;
   flex: 1;
-`;
-
-export const AddListButton = styled.button`
-  border: none;
-  background-color: #f5ecff;
-  color: #7267ef;
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
 `;
