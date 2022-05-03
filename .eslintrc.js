@@ -19,5 +19,6 @@ module.exports = {
     'no-unused-vars': 'off',
     'react/prop-types': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'max-len': 0,
   },
 };
