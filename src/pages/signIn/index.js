@@ -2,10 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar, Button, TextField, Box, Container, Typography } from '@mui/material';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import history from '../../utils/history';
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = () => {
+    history.push('home');
   };
 
   return (

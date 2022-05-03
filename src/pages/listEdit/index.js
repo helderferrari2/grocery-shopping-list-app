@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   AppBar,
   Box,
@@ -23,6 +24,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -34,10 +36,6 @@ const Search = styled('div')(({ theme }) => ({
   marginRight: theme.spacing(2),
   marginLeft: 0,
   width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -98,7 +96,6 @@ export default function ListEdit() {
         quantity: 5,
         price: 999.5,
       },
-      ...mockItems,
     ],
   };
 
@@ -106,7 +103,14 @@ export default function ListEdit() {
     <Box sx={{ minHeight: '100vh' }}>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton size="large" edge="start" color="inherit" aria-label="menu">
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            component={Link}
+            to="/list/1"
+          >
             <ArrowBackIcon />
           </IconButton>
 
@@ -117,17 +121,18 @@ export default function ListEdit() {
             <StyledInputBase placeholder="Digite um item" inputProps={{ 'aria-label': 'search' }} />
           </Search>
 
-          <IconButton size="large" edge="start" color="inherit" aria-label="menu">
-            <MoreVertIcon />
+          <IconButton size="large" edge="end" color="inherit" aria-label="menu">
+            <KeyboardVoiceIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
 
+      {/* User list */}
       <List sx={{ mt: 8, width: '100%' }} component="nav" aria-label="mailbox folders">
         {mock.list_items.map((list) => (
           <>
             <ListItem key={list.id}>
-              <Typography variant="h6">{list.name}</Typography>
+              <Typography variant="p">{list.name}</Typography>
               <Box
                 sx={{
                   display: 'flex',
@@ -140,6 +145,28 @@ export default function ListEdit() {
                   <RemoveCircleSharpIcon />
                 </IconButton>
                 <Typography variant="h6">1</Typography>
+                <IconButton color="primary">
+                  <AddCircleSharpIcon />
+                </IconButton>
+              </Box>
+            </ListItem>
+            <Divider />
+          </>
+        ))}
+
+        {/* Items that not exists in lists */}
+        {mockItems.map((list) => (
+          <>
+            <ListItem key={list.id} sx={{ background: '#f3f3f3' }}>
+              <Typography variant="p">{list.name}</Typography>
+              <Box
+                sx={{
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                }}
+              >
                 <IconButton color="primary">
                   <AddCircleSharpIcon />
                 </IconButton>
