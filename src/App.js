@@ -5,13 +5,16 @@ import Routes from './routes';
 import history from './utils/history';
 import { theme } from './assets/styles/theme';
 import './assets/styles/global.css';
+import { AuthProvider } from './context/AuthContext';
 
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Router history={history}>
-        <Routes />
-      </Router>
+      <AuthProvider>
+        <Router history={history}>
+          <Routes />
+        </Router>
+      </AuthProvider>
     </ThemeProvider>
   );
 }
