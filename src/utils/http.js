@@ -1,4 +1,6 @@
 import axios from 'axios';
+import AuthService from './auth.service';
+import useAuth from '../hooks/auth';
 
 const API_URL = `http://localhost:8000/api`;
 
@@ -15,10 +17,11 @@ const http = axios.create({
 
 // Request interceptor
 http.interceptors.request.use(
-  (request) =>
-    // const token = AuthService.getToken();
-    // if (token) request.headers.common.Authorization = `Bearer ${token}`;
-    request,
+  (request) => {
+    const token = AuthService.getToken();
+    if (token) request.headers.common.Authorization = `Bearer ${token}`;
+    return request;
+  },
   (error) => Promise.reject(error)
 );
 
@@ -30,8 +33,8 @@ http.interceptors.response.use(
 
     // Unauthenticated
     if (status === 401) {
-      // store.dispatch('logout');
-      // router.push({ name: 'login' });
+      const { logout } = useAuth();
+      logout();
     }
 
     // Validation
@@ -55,5 +58,11 @@ export default {
   },
   login(payload) {
     return http.post('/login', payload);
+  },
+  me() {
+    return http.get('/me');
+  },
+  fetchUserList() {
+    return http.get('/lists');
   },
 };

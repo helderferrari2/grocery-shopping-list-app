@@ -1,29 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  Container,
-  IconButton,
-  Grid,
-  Paper,
-  Fab,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  TextField,
-  DialogActions,
-  Button,
-} from '@mui/material';
+import { AppBar, Box, Toolbar, Typography, Container, IconButton, Grid, Paper, Fab, Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
 import history from '../../utils/history';
+import useList from '../../hooks/lists';
+import http from '../../utils/http';
 
 export default function Home() {
+  const { lists, setLists } = useList();
   const [open, setOpen] = useState(false);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await http.fetchUserList();
+        setLists(response.data);
+      } catch (e) {
+        console.log('error', e);
+      }
+    }
+    fetchData();
+  }, []);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -36,13 +33,6 @@ export default function Home() {
   const handleCreateNewList = () => {
     history.push('/list/edit/1');
   };
-
-  const mock = [
-    { id: 1, name: 'Lista 1' },
-    { id: 2, name: 'Lista 2' },
-    { id: 3, name: 'Lista 3' },
-    { id: 4, name: 'Lista 4' },
-  ];
 
   return (
     <Box sx={{ minHeight: '100vh' }}>
@@ -62,7 +52,7 @@ export default function Home() {
           <Typography sx={{ my: 2 }} variant="h6">
             Minhas listas
           </Typography>
-          {mock.map((list) => (
+          {lists.map((list) => (
             <Link to={`/list/${list.id}`} key={list.id}>
               <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
                 {list.name}
@@ -71,25 +61,13 @@ export default function Home() {
           ))}
         </Grid>
       </Container>
-      <Fab
-        color="primary"
-        aria-label="add"
-        sx={{ position: 'fixed', right: '20px', bottom: '20px' }}
-        onClick={handleClickOpen}
-      >
+      <Fab color="primary" aria-label="add" sx={{ position: 'fixed', right: '20px', bottom: '20px' }} onClick={handleClickOpen}>
         <AddIcon />
       </Fab>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Criar nova lista</DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            id="name"
-            label="Digite o nome"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
+          <TextField autoFocus id="name" label="Digite o nome" type="text" fullWidth variant="standard" />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>

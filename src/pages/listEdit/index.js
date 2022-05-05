@@ -1,25 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  IconButton,
-  Fab,
-  List,
-  ListItem,
-  ListItemText,
-  Divider,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
-  TextField,
-} from '@mui/material';
+import { AppBar, Box, Toolbar, Typography, IconButton, List, ListItem, Divider } from '@mui/material';
 
 import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
 import RemoveCircleSharpIcon from '@mui/icons-material/RemoveCircleSharp';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
@@ -103,14 +88,7 @@ export default function ListEdit() {
     <Box sx={{ minHeight: '100vh' }}>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            component={Link}
-            to="/list/1"
-          >
+          <IconButton size="large" edge="start" color="inherit" aria-label="menu" component={Link} to="/list/1">
             <ArrowBackIcon />
           </IconButton>
 
