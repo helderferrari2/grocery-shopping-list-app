@@ -2,11 +2,9 @@ import axios from 'axios';
 import AuthService from './auth.service';
 import useAuth from '../hooks/auth';
 
-const API_URL = `http://localhost:8000/api`;
-
 // Create axios instance
-const http = axios.create({
-  baseURL: API_URL,
+const api = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
   timeout: 30000,
   headers: {
     post: {
@@ -16,7 +14,7 @@ const http = axios.create({
 });
 
 // Request interceptor
-http.interceptors.request.use(
+api.interceptors.request.use(
   (request) => {
     const token = AuthService.getToken();
     if (token) request.headers.common.Authorization = `Bearer ${token}`;
@@ -26,7 +24,7 @@ http.interceptors.request.use(
 );
 
 // Response Interceptor
-http.interceptors.response.use(
+api.interceptors.response.use(
   (response) => response,
   (error) => {
     const { status } = error.response;
@@ -54,15 +52,24 @@ http.interceptors.response.use(
 // API methods
 export default {
   register(payload) {
-    return http.post('/register', payload);
+    return api.post('/register', payload);
   },
   login(payload) {
-    return http.post('/login', payload);
+    return api.post('/login', payload);
   },
   me() {
-    return http.get('/me');
+    return api.get('/me');
   },
   fetchUserList() {
-    return http.get('/lists');
+    return api.get('/lists');
+  },
+  storeUserList(payload) {
+    return api.post('/lists', payload);
+  },
+  fetchList(listId) {
+    return api.get(`/list-items/${listId}`);
+  },
+  fetchItems() {
+    return api.get('/items');
   },
 };

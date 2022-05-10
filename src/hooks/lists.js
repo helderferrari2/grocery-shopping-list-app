@@ -1,5 +1,4 @@
-import React, {createContext, useState, useCallback, useContext} from 'react'
-import http from '../utils/http'
+import React, {createContext, useState, useContext} from 'react'
 
 /**
  * Create context
@@ -18,6 +17,9 @@ export function ListProvider({children}) {
   )
 }
 
+/**
+ * Custom Hook
+ */
 export default function useList() {
   return useContext(ListContext)
 }

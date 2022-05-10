@@ -6,56 +6,11 @@ import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
 import RemoveCircleSharpIcon from '@mui/icons-material/RemoveCircleSharp';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
+import SearchItem from '../../components/SearchItem';
 
 export default function ListEdit() {
-  const mockItems = [
-    { id: 10, name: 'Fogao' },
-    { id: 11, name: 'Skate' },
-    { id: 12, name: 'Monitor' },
-    { id: 13, name: 'Danone' },
-    { id: 14, name: 'Racao' },
-    { id: 15, name: 'Danete' },
-  ];
+
 
   const mock = {
     name: 'Lista 1',
@@ -92,12 +47,7 @@ export default function ListEdit() {
             <ArrowBackIcon />
           </IconButton>
 
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase placeholder="Digite um item" inputProps={{ 'aria-label': 'search' }} />
-          </Search>
+          <SearchItem />
 
           <IconButton size="large" edge="end" color="inherit" aria-label="menu">
             <KeyboardVoiceIcon />
@@ -123,28 +73,6 @@ export default function ListEdit() {
                   <RemoveCircleSharpIcon />
                 </IconButton>
                 <Typography variant="h6">1</Typography>
-                <IconButton color="primary">
-                  <AddCircleSharpIcon />
-                </IconButton>
-              </Box>
-            </ListItem>
-            <Divider />
-          </>
-        ))}
-
-        {/* Items that not exists in lists */}
-        {mockItems.map((list) => (
-          <>
-            <ListItem key={list.id} sx={{ background: '#f3f3f3' }}>
-              <Typography variant="p">{list.name}</Typography>
-              <Box
-                sx={{
-                  display: 'flex',
-                  width: '100%',
-                  justifyContent: 'flex-end',
-                  alignItems: 'center',
-                }}
-              >
                 <IconButton color="primary">
                   <AddCircleSharpIcon />
                 </IconButton>

@@ -9,9 +9,5 @@ export default function RouteWrapper({ component: Component, isPrivate = false, 
     return <Redirect to="/login" />;
   }
 
-  if (isLoggedIn && !isPrivate) {
-    return <Redirect to="/home" />;
-  }
-
   return <Route {...rest} component={Component} />;
 }

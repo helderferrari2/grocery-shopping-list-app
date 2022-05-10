@@ -1,5 +1,5 @@
 import React, { useState, createContext, useCallback, useContext } from 'react';
-import http from '../utils/http';
+import api from '../utils/api.service';
 import history from '../utils/history';
 import AuthService from '../utils/auth.service';
 
@@ -18,12 +18,12 @@ export function AuthProvider({ children }) {
   });
 
   const signUp = useCallback(async (payload) => {
-    const response = await http.register(payload);
+    const response = await api.register(payload);
     return response.data;
   }, []);
 
   const signIn = useCallback(async (payload) => {
-    const response = await http.login(payload);
+    const response = await api.login(payload);
     const { user, token } = response.data;
 
     setUser(user);
@@ -39,7 +39,7 @@ export function AuthProvider({ children }) {
 
   //@todo Implementar isso depois para buscar o user da api ao montar o component
   // const checkUserAuth = useCallback(async() => {
-  //   const response = await http.me()
+  //   const response = await api.me()
   //   console.log('checkUserAuth', response.data)
   //   return response.data
   // }, [])

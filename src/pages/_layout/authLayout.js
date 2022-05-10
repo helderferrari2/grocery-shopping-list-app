@@ -10,7 +10,7 @@ export default function AuthLayout({children}) {
         <ShoppingCartCheckoutIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-        Go Grocery
+        {process.env.REACT_APP_APP_NAME || ''}
       </Typography>
         {children}
     </Box>
