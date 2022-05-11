@@ -1,43 +1,20 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { AppBar, Box, Toolbar, Typography, IconButton, List, ListItem, Divider } from '@mui/material';
-
-import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
-import RemoveCircleSharpIcon from '@mui/icons-material/RemoveCircleSharp';
-
+import React, { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import api from '../../utils/api.service';
+import useListItems from '../../hooks/listItems';
+import SearchItem from '../../components/SearchItem';
+import EditSingleItem from '../../components/EditSingleItem';
+import { AppBar, Box, Toolbar, IconButton, List, Alert, Container } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
-import SearchItem from '../../components/SearchItem';
 
 export default function ListEdit() {
+  const { listId } = useParams();
+  const { listItems, setListItems } = useListItems();
 
-
-  const mock = {
-    name: 'Lista 1',
-    list_items: [
-      {
-        id: 1,
-        name: 'Arroz',
-        checked: true,
-        quantity: 1,
-        price: 10.5,
-      },
-      {
-        id: 2,
-        name: 'Bigorna',
-        checked: false,
-        quantity: 3,
-        price: 1899.99,
-      },
-      {
-        id: 3,
-        name: 'Geladeira',
-        checked: false,
-        quantity: 5,
-        price: 999.5,
-      },
-    ],
-  };
+  useEffect(() => {
+    api.fetchList(listId).then((response) => setListItems(response.data));
+  }, []);
 
   return (
     <Box sx={{ minHeight: '100vh' }}>
@@ -46,41 +23,21 @@ export default function ListEdit() {
           <IconButton size="large" edge="start" color="inherit" aria-label="menu" component={Link} to="/list/1">
             <ArrowBackIcon />
           </IconButton>
-
           <SearchItem />
-
           <IconButton size="large" edge="end" color="inherit" aria-label="menu">
             <KeyboardVoiceIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
 
-      {/* User list */}
-      <List sx={{ mt: 8, width: '100%' }} component="nav" aria-label="mailbox folders">
-        {mock.list_items.map((list) => (
-          <>
-            <ListItem key={list.id}>
-              <Typography variant="p">{list.name}</Typography>
-              <Box
-                sx={{
-                  display: 'flex',
-                  width: '100%',
-                  justifyContent: 'flex-end',
-                  alignItems: 'center',
-                }}
-              >
-                <IconButton color="primary">
-                  <RemoveCircleSharpIcon />
-                </IconButton>
-                <Typography variant="h6">1</Typography>
-                <IconButton color="primary">
-                  <AddCircleSharpIcon />
-                </IconButton>
-              </Box>
-            </ListItem>
-            <Divider />
-          </>
-        ))}
+      <List sx={{ mt: 8, width: '100%' }} component="nav">
+        {listItems.hasOwnProperty('list_items') && listItems.list_items.length > 0 ? (
+          listItems.list_items.map((item) => <EditSingleItem key={item.id} item={item} />)
+        ) : (
+          <Container>
+            <Alert severity="info">Ops, você não possui nenhum item</Alert>
+          </Container>
+        )}
       </List>
     </Box>
   );

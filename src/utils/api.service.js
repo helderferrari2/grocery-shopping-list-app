@@ -60,6 +60,9 @@ export default {
   me() {
     return api.get('/me');
   },
+  fetchItems() {
+    return api.get('/items');
+  },
   fetchUserList() {
     return api.get('/lists');
   },
@@ -69,7 +72,13 @@ export default {
   fetchList(listId) {
     return api.get(`/list-items/${listId}`);
   },
-  fetchItems() {
-    return api.get('/items');
+  storeListItem(payload) {
+    return api.post('/list-items', payload);
+  },
+  updateListItem(itemId, payload) {
+    return api.put(`/list-items/${itemId}`, payload);
+  },
+  deleteListItem(itemId) {
+    return api.delete(`/list-items/${itemId}`);
   },
 };
