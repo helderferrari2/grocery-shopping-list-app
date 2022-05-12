@@ -69,6 +69,12 @@ export default {
   storeUserList(payload) {
     return api.post('/lists', payload);
   },
+  updateUserList(itemId, payload) {
+    return api.put(`/lists/${itemId}`, payload);
+  },
+  deleteUserList(listId) {
+    return api.delete(`/lists/${listId}`);
+  },
   fetchList(listId) {
     return api.get(`/list-items/${listId}`);
   },

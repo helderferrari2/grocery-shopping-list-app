@@ -10,7 +10,12 @@ export default function SearchItem() {
   const { items, setItems } = useItems();
   const { handleNewItem } = useListItems();
 
-  const handleSelected = async (value) => {
+  useEffect(() => {
+    api.fetchItems().then((response) => setItems(response.data));
+  }, [setItems]);
+
+  const handleSelected = async (e, value) => {
+    e.preventDefault()
     if (value === null || listId === null) {
       return;
     }
@@ -24,18 +29,14 @@ export default function SearchItem() {
     await handleNewItem(payload);
   };
 
-  useEffect(() => {
-    api.fetchItems().then((response) => setItems(response.data));
-  }, []);
-
   return (
     <Autocomplete
       freeSolo
       options={items}
       getOptionLabel={(option) => option.name || ''}
-      sx={{ width: '100%' }}
+      sx={{ width: '100%'}}
       renderInput={(params) => <TextField {...params} placeholder="Digite o item" variant="filled"/>}
-      onChange={(event, value) => handleSelected(value)}
+      onChange={(e, value) => handleSelected(e, value)}
     />
   );
 }

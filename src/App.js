@@ -7,6 +7,7 @@ import './assets/styles/global.css';
 import GlobalProvider from '../src/hooks';
 
 export default function App() {
+
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>

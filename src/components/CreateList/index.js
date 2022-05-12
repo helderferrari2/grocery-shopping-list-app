@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -22,7 +22,6 @@ export default function CreateList() {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(CreateListSchema) });
-
 
   const onSubmit = async (formData) => {
     try {
