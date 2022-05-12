@@ -1,25 +1,36 @@
-import React from 'react';
-import CardTips from '../../components/CardTips';
-import Input from '../../components/Input';
-import CardList from '../../components/CardList';
-import Title from '../../components/Title';
+import React, { useEffect } from 'react';
+import { AppBar, Box, Toolbar, Typography, Container, Grid, Alert } from '@mui/material';
+import useList from '../../hooks/lists';
+import api from '../../utils/api.service';
+import CreateList from '../../components/CreateList';
+import SingleList from '../../components/SingleList';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 
 export default function Home() {
-  const lists = [
-    { id: 1, name: 'Lista 1' },
-    { id: 2, name: 'Lista 2' },
-    { id: 3, name: 'Lista 3' },
-    { id: 4, name: 'Lista 4' },
-  ];
+  const { lists, setLists } = useList();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    api.fetchUserList().then((response) => setLists(response.data));
+  }, [setLists]);
 
   return (
-    <>
-      <CardTips />
-      <Title text="Minhas listas" />
-      <Input type="text" name="search" placeholder="Pesquise sua lista aqui" />
-      {lists.map((list) => (
-        <CardList key={list.id} list={list} />
-      ))}
-    </>
+    <Box sx={{ minHeight: '100vh' }}>
+      <AppBar position="fixed">
+        <Toolbar>
+          <ShoppingCartCheckoutIcon />
+          <Typography variant="h6" sx={{ flexGrow: 1, ml: 1 }}>
+            {process.env.REACT_APP_APP_NAME}
+          </Typography>
+        </Toolbar>
+      </AppBar>
+
+      <Container sx={{ mt: 10 }}>
+        <Grid item xs={12}>
+          {lists.length > 0 ? lists.map((list) => <SingleList list={list} key={list.id} />) : <Alert severity="info">Ops, você não possui nenhuma lista</Alert>}
+        </Grid>
+      </Container>
+      <CreateList />
+    </Box>
   );
 }

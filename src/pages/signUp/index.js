@@ -1,29 +1,45 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Input from '../../components/Input';
-import Button from '../../components/Button';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+import useAuth from '../../hooks/auth';
+import { Button, TextField, Box } from '@mui/material';
+import AuthLayout from '../_layout/authLayout';
 
 export default function SignUp() {
-  const handleSubmit = () => {
-    alert('clicou');
+  const { signIn, signUp } = useAuth();
+
+  const SignupSchema = Yup.object().shape({
+    name: Yup.string().required('Nome obrigatório'),
+    email: Yup.string().email('Digite um e-mail válido').required('E-mail obrigatório'),
+    password: Yup.string().required('Senha obrigatória').min(6),
+  });
+
+  const { register, handleSubmit, formState: { errors }} = useForm({ resolver: yupResolver(SignupSchema) });
+
+  const onSubmit = async (formData) => {
+    try {
+      await signUp(formData);
+      await signIn(formData);
+    } catch (err) {
+      // console.log(err);
+    }
   };
 
   return (
-    <>
-      <img
-        src="https://xaksis.github.io/vue-good-table/vgt-logo.png"
-        alt="logo"
-      />
-      <h1>Go Grocery</h1>
-      <p>Sua lista de compras online</p>
-      <form onSubmit={handleSubmit}>
-        <Input type="text" name="name" placeholder="Digite seu nome" />
-        <Input type="email" name="email" placeholder="Digite seu e-mail" />
-        <Input type="password" name="password" placeholder="Digite sua senha" />
-        <Button type="submit">Entrar</Button>
-      </form>
-
-      <Link to="/login">Já possui uma conta? Entrar</Link>
-    </>
+    <AuthLayout>
+      <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ my: 1 }}>
+        <TextField margin="normal" fullWidth label="Nome" {...register('name')} error={!!errors.name} helperText={errors.name?.message} />
+        <TextField margin="normal" fullWidth label="E-mail" {...register('email')} error={!!errors.email} helperText={errors.email?.message} />
+        <TextField margin="normal" fullWidth label="Senha" type="password" {...register('password')} error={!!errors.password} helperText={errors.password?.message}/>
+        <Button type="submit" fullWidth variant="contained" sx={{ my: 1 }} size="large">
+          Cadastrar
+        </Button>
+      </Box>
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Link to="/register">Já possui uma conta? Entrar</Link>
+      </Box>
+    </AuthLayout>
   );
 }

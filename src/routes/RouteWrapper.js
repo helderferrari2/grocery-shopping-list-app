@@ -1,29 +1,13 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
-import AuthLayout from '../pages/_layouts/auth';
-import DefaultLayout from '../pages/_layouts/default';
+import { Route, Redirect } from 'react-router-dom';
+import useAuth from '../hooks/auth';
 
-export default function RouteWrapper({
-  component: Component,
-  isPrivate = false,
-  ...rest
-}) {
-  const isLoggedIn = true;
+export default function RouteWrapper({ component: Component, isPrivate = false, ...rest }) {
+  const { isLoggedIn } = useAuth();
 
-  // if (!isLoggedIn && isPrivate) {
-  //   return <Redirect to="/login" />;
-  // }
+  if (!isLoggedIn && isPrivate) {
+    return <Redirect to="/login" />;
+  }
 
-  const Layout = isLoggedIn ? DefaultLayout : AuthLayout;
-
-  return (
-    <Route
-      {...rest}
-      render={(props) => (
-        <Layout>
-          <Component {...props} />
-        </Layout>
-      )}
-    />
-  );
+  return <Route {...rest} component={Component} />;
 }
