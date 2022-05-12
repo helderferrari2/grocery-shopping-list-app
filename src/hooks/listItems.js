@@ -12,6 +12,10 @@ const ListItemsContext = createContext({});
 export function ListItemsProvider({ children }) {
   const [listItems, setListItems] = useState({});
 
+  const itemAlreadyExists = (name) => {
+    return listItems.list_items.some(list => list.name === name)
+  }
+
   const handleNewItem = async (payload) => {
     const response = await api.storeListItem(payload);
     const { data } = response;
@@ -49,7 +53,7 @@ export function ListItemsProvider({ children }) {
   };
 
   return (
-    <ListItemsContext.Provider value={{ listItems, setListItems, handleNewItem, handleUpdateItem, handleDeleteItem }}>{children}</ListItemsContext.Provider>
+    <ListItemsContext.Provider value={{ listItems, setListItems, handleNewItem, handleUpdateItem, handleDeleteItem, itemAlreadyExists }}>{children}</ListItemsContext.Provider>
   );
 }
 

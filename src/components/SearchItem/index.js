@@ -8,7 +8,7 @@ import useListItems from '../../hooks/listItems';
 export default function SearchItem() {
   const { listId } = useParams();
   const { items, setItems } = useItems();
-  const { handleNewItem } = useListItems();
+  const { itemAlreadyExists, handleNewItem } = useListItems();
 
   useEffect(() => {
     api.fetchItems().then((response) => setItems(response.data));
@@ -25,6 +25,10 @@ export default function SearchItem() {
       name: value.name ?? value,
       category: value.category ?? 'diversos',
     };
+
+    if (itemAlreadyExists(payload.name)) {
+      return;
+    }
 
     await handleNewItem(payload);
   };
