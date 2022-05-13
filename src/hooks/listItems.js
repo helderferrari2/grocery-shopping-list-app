@@ -25,7 +25,7 @@ export function ListItemsProvider({ children }) {
     setListItems({ ...rest, list_items: items });
   };
 
-  const handleUpdateItem = async (payload) => {
+  const handleUpdateItem = async (payload, reorder = false) => {
     const response = await api.updateListItem(payload.id, payload);
     const { data } = response;
     const { list_items, ...rest } = listItems;
@@ -34,7 +34,7 @@ export function ListItemsProvider({ children }) {
     items[index] = data;
 
     // Move checked object to end of array
-    if (items[index].checked) {
+    if (reorder && items[index].checked) {
       items.push(items.splice(index, 1)[0]);
     }
 

@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useListItems from '../../hooks/listItems';
-import { Typography, IconButton, Divider, ListItem, Box } from '@mui/material';
+import { Typography, IconButton, Divider, Box } from '@mui/material';
 
 import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
 import RemoveCircleSharpIcon from '@mui/icons-material/RemoveCircleSharp';
+import CurrencyInput from 'react-currency-input-field';
 
 export default function SingleItem({ item, isEdit = false }) {
   const { handleUpdateItem, handleDeleteItem } = useListItems();
+
+  const [price, setPrice] = useState(item.price);
 
   const handleDecrease = async (e, item) => {
     e.preventDefault();
@@ -30,27 +33,28 @@ export default function SingleItem({ item, isEdit = false }) {
   const toggleChecked = async (e, item) => {
     e.preventDefault();
     const payload = { ...item, checked: !item.checked };
+    await handleUpdateItem(payload, true);
+  };
+
+  const handlePrice = async (newPrice) => {
+    setPrice(newPrice);
+    const payload = { ...item, price: newPrice };
     await handleUpdateItem(payload);
   };
 
   return (
     <>
-      <ListItem>
-        {isEdit ? (
-          <Typography variant="h6" sx={{ width: '100%' }}>
-            {item.name}
-          </Typography>
-        ) : (
-          <Typography
-            variant="h6"
-            onClick={(e) => toggleChecked(e, item)}
-            sx={{ textDecoration: item.checked ? 'line-through' : 'none', cursor: 'pointer', width: '100%' }}
-          >
-            {item.name}
-          </Typography>
-        )}
-
-        <Box sx={{ display: 'flex', width: '100%', justifyContent: 'flex-end', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', padding: '10px' }}>
+        <Box sx={{ flexGrow: '1' }}>
+          {isEdit ? (
+            <Typography variant="h6">{item.name}</Typography>
+          ) : (
+            <Typography variant="h6" onClick={(e) => toggleChecked(e, item)} sx={{ textDecoration: item.checked ? 'line-through' : 'none', cursor: 'pointer' }}>
+              {item.name}
+            </Typography>
+          )}
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <IconButton color="primary" onClick={(e) => handleDecrease(e, item)}>
             <RemoveCircleSharpIcon />
           </IconButton>
@@ -59,7 +63,17 @@ export default function SingleItem({ item, isEdit = false }) {
             <AddCircleSharpIcon />
           </IconButton>
         </Box>
-      </ListItem>
+        <Box>
+          <CurrencyInput
+            defaultValue={price || 0}
+            decimalsLimit={2}
+            fixedDecimalLength={2}
+            onValueChange={(value) => handlePrice(value)}
+            style={{ border: 'none', fontSize: '20px' }}
+            prefix="R$ "
+          />
+        </Box>
+      </Box>
       <Divider />
     </>
   );
