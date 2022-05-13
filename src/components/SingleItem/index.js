@@ -44,7 +44,7 @@ export default function SingleItem({ item, isEdit = false }) {
 
   return (
     <>
-      <Box sx={{ display: 'flex', alignItems: 'center', padding: '10px' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', padding: '10px', flex: '1' }}>
         <Box sx={{ flexGrow: '1' }}>
           {isEdit ? (
             <Typography variant="h6">{item.name}</Typography>
@@ -54,7 +54,7 @@ export default function SingleItem({ item, isEdit = false }) {
             </Typography>
           )}
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
           <IconButton color="primary" onClick={(e) => handleDecrease(e, item)}>
             <RemoveCircleSharpIcon />
           </IconButton>
@@ -69,7 +69,7 @@ export default function SingleItem({ item, isEdit = false }) {
             decimalsLimit={2}
             fixedDecimalLength={2}
             onValueChange={(value) => handlePrice(value)}
-            style={{ border: 'none', fontSize: '20px' }}
+            style={{ border: 'none', fontSize: '20px', maxWidth: '80px' }}
             prefix="R$ "
           />
         </Box>

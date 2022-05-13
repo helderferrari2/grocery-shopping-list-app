@@ -8,7 +8,7 @@ import { Button, TextField, Box } from '@mui/material';
 import AuthLayout from '../_layout/authLayout';
 
 export default function SignUp() {
-  const { signIn, signUp } = useAuth();
+  const { signUp } = useAuth();
 
   const SignupSchema = Yup.object().shape({
     name: Yup.string().required('Nome obrigatório'),
@@ -21,7 +21,6 @@ export default function SignUp() {
   const onSubmit = async (formData) => {
     try {
       await signUp(formData);
-      await signIn(formData);
     } catch (err) {
       // console.log(err);
     }
