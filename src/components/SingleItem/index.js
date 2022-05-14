@@ -47,9 +47,22 @@ export default function SingleItem({ item, isEdit = false }) {
       <Box sx={{ display: 'flex', alignItems: 'center', padding: '10px', flex: '1' }}>
         <Box sx={{ flexGrow: '1' }}>
           {isEdit ? (
-            <Typography variant="h6">{item.name}</Typography>
+            <Typography variant="h6" sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '180px' }}>
+              {item.name}
+            </Typography>
           ) : (
-            <Typography variant="h6" onClick={(e) => toggleChecked(e, item)} sx={{ textDecoration: item.checked ? 'line-through' : 'none', cursor: 'pointer' }}>
+            <Typography
+              variant="h6"
+              onClick={(e) => toggleChecked(e, item)}
+              sx={{
+                textDecoration: item.checked ? 'line-through' : 'none',
+                cursor: 'pointer',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                maxWidth: '180px',
+              }}
+            >
               {item.name}
             </Typography>
           )}
