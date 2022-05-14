@@ -3,9 +3,9 @@ import { Link, useParams } from 'react-router-dom';
 import api from '../../utils/api.service';
 import useListItems from '../../hooks/listItems';
 import SearchItem from '../../components/SearchItem';
+import Speech from '../../components/Speech';
 import { AppBar, Box, Toolbar, IconButton, List, Alert, Container } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import SingleItem from '../../components/SingleItem';
 
 export default function ListEdit() {
@@ -25,9 +25,7 @@ export default function ListEdit() {
             <ArrowBackIcon />
           </IconButton>
           <SearchItem />
-          <IconButton size="large" edge="end" color="inherit" aria-label="menu">
-            <KeyboardVoiceIcon />
-          </IconButton>
+          <Speech />
         </Toolbar>
       </AppBar>
 
