@@ -26,20 +26,17 @@ export default function ListDetails() {
     if (listItems.hasOwnProperty('list_items')) {
       setCheckedItems(listItems.list_items.reduce((counter, obj) => (obj.checked ? (counter += 1) : counter), 0));
       setTotalItems(listItems.list_items.length);
-      calculateCart();
+
+      let cart = 0;
+      listItems.list_items.forEach((i) => {
+        if (i.checked) {
+          cart += Number.parseFloat(i.quantity) * Number.parseFloat(i.price);
+        }
+      });
+
+      setTotalCart(cart.toFixed(2));
     }
   }, [listItems]);
-
-  const calculateCart = () => {
-    let cart = 0;
-    listItems.list_items.forEach((item) => {
-      if (item.checked) {
-        cart += Number.parseFloat(item.quantity) * Number.parseFloat(item.price);
-      }
-    });
-
-    setTotalCart(cart.toFixed(2));
-  };
 
   return (
     <Box sx={{ minHeight: '100vh' }}>
