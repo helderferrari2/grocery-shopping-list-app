@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import api from '../../utils/api.service';
 import useListItems from '../../hooks/listItems';
 
-import { AppBar, Box, Toolbar, Typography, IconButton, Fab, List, Alert, Container } from '@mui/material';
+import { AppBar, Box, Toolbar, Typography, IconButton, List, Alert, Container } from '@mui/material';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from '@mui/icons-material/Edit';
@@ -15,19 +15,31 @@ export default function ListDetails() {
 
   const [checkedItems, setCheckedItems] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
+  const [totalCart, setTotalCart] = useState(0);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     api.fetchList(listId).then((response) => setListItems(response.data));
   }, [listId, setListItems]);
 
-
   useEffect(() => {
-    if(listItems.hasOwnProperty('list_items')) {
-      setCheckedItems(listItems.list_items.reduce((counter, obj) => obj.checked ? counter += 1 : counter, 0));
+    if (listItems.hasOwnProperty('list_items')) {
+      setCheckedItems(listItems.list_items.reduce((counter, obj) => (obj.checked ? (counter += 1) : counter), 0));
       setTotalItems(listItems.list_items.length);
+      calculateCart();
     }
   }, [listItems]);
+
+  const calculateCart = () => {
+    let cart = 0;
+    listItems.list_items.forEach((item) => {
+      if (item.checked) {
+        cart += Number.parseFloat(item.quantity) * Number.parseFloat(item.price);
+      }
+    });
+
+    setTotalCart(cart.toFixed(2));
+  };
 
   return (
     <Box sx={{ minHeight: '100vh' }}>
@@ -36,12 +48,12 @@ export default function ListDetails() {
           <IconButton size="large" edge="start" color="inherit" aria-label="menu" component={Link} to="/home">
             <ArrowBackIcon />
           </IconButton>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" sx={{ flex: 1 }}>
             {listItems.name}
           </Typography>
-          <Typography variant="h6">
-            {checkedItems} / {totalItems}
-          </Typography>
+          <IconButton size="large" edge="end" color="inherit" aria-label="menu" component={Link} to={`/list/edit/${listId}`}>
+            <EditIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
 
@@ -49,14 +61,24 @@ export default function ListDetails() {
         {listItems.hasOwnProperty('list_items') && listItems.list_items.length > 0 ? (
           listItems.list_items.map((item) => <SingleItem item={item} key={item.id} />)
         ) : (
-          <Container sx={{mt: 2}}>
+          <Container sx={{ mt: 2 }}>
             <Alert severity="info">Ops, você não possui nenhum item</Alert>
           </Container>
         )}
       </List>
-      <Fab color="primary" aria-label="add" sx={{ position: 'fixed', right: '20px', bottom: '20px' }} component={Link} to={`/list/edit/${listId}`}>
-        <EditIcon />
-      </Fab>
+
+      <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
+        <Toolbar>
+          <Typography variant="h6">
+            <small>Items: </small>
+            {checkedItems} / {totalItems}
+          </Typography>
+          <Typography variant="h6" sx={{ flex: 1, textAlign: 'right' }}>
+            <small>Total: </small>
+            R$ {totalCart}
+          </Typography>
+        </Toolbar>
+      </AppBar>
     </Box>
   );
 }
