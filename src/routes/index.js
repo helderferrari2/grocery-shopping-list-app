@@ -14,7 +14,7 @@ export default function Routes() {
   return (
     <Switch>
       <Router history={history}>
-        <Route exact path="/" component={SignIn} />
+        <Route exact path="/" component={Home} />
         <Route path="/login" component={SignIn} />
         <Route path="/register" component={SignUp} />
         <Route path="/home" isPrivate component={Home} />

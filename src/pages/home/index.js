@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { AppBar, Box, Toolbar, Typography, Container, Grid, Alert } from '@mui/material';
+import { AppBar, Box, Toolbar, Typography, Container, Grid, Alert, Avatar } from '@mui/material';
 import useList from '../../hooks/lists';
 import api from '../../utils/api.service';
 import CreateList from '../../components/CreateList';
 import SingleList from '../../components/SingleList';
-import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import Logo from '../../assets/images/logo.png';
 
 export default function Home() {
   const { lists, setLists } = useList();
@@ -18,7 +18,7 @@ export default function Home() {
     <Box sx={{ minHeight: '100vh' }}>
       <AppBar position="fixed">
         <Toolbar>
-          <ShoppingCartCheckoutIcon />
+        <Avatar sx={{ width: 56, height: 56 }} src={Logo}></Avatar>
           <Typography variant="h6" sx={{ flexGrow: 1, ml: 1 }}>
             {process.env.REACT_APP_APP_NAME}
           </Typography>

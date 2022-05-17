@@ -5,7 +5,6 @@ import useListItems from '../../hooks/listItems';
 import { useParams } from 'react-router-dom';
 import useItems from '../../hooks/items';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
-import RecordingIcon from '../../assets/images/Ripple-1.8s-200px.svg';
 
 export default function Speech() {
   const { listId } = useParams();
@@ -77,8 +76,16 @@ export default function Speech() {
             <h3>Toque para falar</h3>
           </Box>
           <Box sx={{ display: 'flex', flex: '1', alignItems: 'center' }}>
-            <IconButton onTouchStart={startListening} onMouseDown={startListening} onTouchEnd={stopListening} onMouseUp={stopListening}>
-              {listening ? <img src={RecordingIcon} alt="Recording" style={{ maxWidth: '100px' }} /> : <KeyboardVoiceIcon sx={{ fontSize: 50 }} />}
+            <IconButton
+              size="large"
+              color="primary"
+              sx={{ background: '#E2E0FB' }}
+              onTouchStart={startListening}
+              onMouseDown={startListening}
+              onTouchEnd={stopListening}
+              onMouseUp={stopListening}
+            >
+              <KeyboardVoiceIcon sx={{ fontSize: 50 }} />
             </IconButton>
           </Box>
           <Box sx={{ display: 'flex', flex: '1', alignItems: 'center' }}>{error && !listening ? error : transcript}</Box>
