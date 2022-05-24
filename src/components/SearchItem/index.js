@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useItems from '../../hooks/items';
 import api from '../../utils/api.service';
@@ -9,6 +9,7 @@ export default function SearchItem() {
   const { listId } = useParams();
   const { items, setItems } = useItems();
   const { itemAlreadyExists, handleNewItem } = useListItems();
+  const [item, setItem] = useState({})
 
   useEffect(() => {
     api.fetchItems().then((response) => setItems(response.data));
@@ -17,6 +18,7 @@ export default function SearchItem() {
   const handleSelected = async (e, value) => {
     e.preventDefault()
     if (value === null || listId === null) {
+      setItem({})
       return;
     }
 
@@ -25,6 +27,8 @@ export default function SearchItem() {
       name: value.name ?? value,
       category: value.category ?? 'diversos',
     };
+
+    setItem({})
 
     if (itemAlreadyExists(payload.name)) {
       return;
@@ -36,11 +40,13 @@ export default function SearchItem() {
   return (
     <Autocomplete
       freeSolo
+      autoSelect
       options={items}
       getOptionLabel={(option) => option.name || ''}
       sx={{ width: '100%'}}
       renderInput={(params) => <TextField {...params} placeholder="Digite o item" variant="filled"/>}
       onChange={(e, value) => handleSelected(e, value)}
+      value={item}
     />
   );
 }

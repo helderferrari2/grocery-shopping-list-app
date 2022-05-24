@@ -27,7 +27,10 @@ export default function Speech() {
     return <span>Browser doesn't support speech recognition.</span>;
   }
 
+  const capitalize = (s) => s[0].toUpperCase() + s.slice(1);
+
   const startListening = () => {
+    resetTranscript();
     SpeechRecognition.startListening({ continuous: true });
   };
 
@@ -35,11 +38,11 @@ export default function Speech() {
     SpeechRecognition.stopListening();
 
     if (transcript === '' || transcript.length > 30) {
-      setError('Não entendi, Fale novamente.');
+      setError('Fale novamente...');
       return;
     }
 
-    const found = items.find((i) => i.name === transcript) ?? {};
+    const found = items.find((i) => i.name === capitalize(transcript)) ?? {};
 
     const payload = {
       list_id: listId,
@@ -47,7 +50,6 @@ export default function Speech() {
       category: found.category ?? 'diversos',
     };
 
-    resetTranscript();
     if (itemAlreadyExists(payload.name)) {
       return;
     }
@@ -73,7 +75,7 @@ export default function Speech() {
           }}
         >
           <Box sx={{ display: 'flex', flex: '1', alignItems: 'center' }}>
-            <h3>Toque para falar</h3>
+            <h3>Segure para falar</h3>
           </Box>
           <Box sx={{ display: 'flex', flex: '1', alignItems: 'center' }}>
             <IconButton

@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import useAuth from '../../hooks/auth';
 import { Button, TextField, Box } from '@mui/material';
 import AuthLayout from '../_layout/authLayout';
+import history from '../../utils/history'
 
 export default function SignUp() {
   const { signUp } = useAuth();
@@ -21,6 +22,7 @@ export default function SignUp() {
   const onSubmit = async (formData) => {
     try {
       await signUp(formData);
+      history.push('login');
     } catch (err) {
       // console.log(err);
     }
