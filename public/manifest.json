@@ -3,7 +3,7 @@
   "short_name": "Go Grocery",
   "scope": "/",
   "start_url": "/",
-  "display": "fullscreen",
+  "display": "standalone",
   "theme_color": "#7267EF",
   "background_color": "#ffffff",
   "icons": [
