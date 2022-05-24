@@ -47,7 +47,7 @@ export default function SingleItem({ item, isEdit = false }) {
       <Box sx={{ display: 'flex', alignItems: 'center', padding: '10px', flex: '1' }}>
         <Box sx={{ flexGrow: '1' }}>
           {isEdit ? (
-            <Typography variant="h6" sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '180px' }}>
+            <Typography variant="h6" sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '160px' }}>
               {item.name}
             </Typography>
           ) : (

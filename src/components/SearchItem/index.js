@@ -9,16 +9,16 @@ export default function SearchItem() {
   const { listId } = useParams();
   const { items, setItems } = useItems();
   const { itemAlreadyExists, handleNewItem } = useListItems();
-  const [item, setItem] = useState({})
+  const [item, setItem] = useState({});
 
   useEffect(() => {
     api.fetchItems().then((response) => setItems(response.data));
   }, [setItems]);
 
   const handleSelected = async (e, value) => {
-    e.preventDefault()
+    e.preventDefault();
     if (value === null || listId === null) {
-      setItem({})
+      setItem({});
       return;
     }
 
@@ -28,7 +28,7 @@ export default function SearchItem() {
       category: value.category ?? 'diversos',
     };
 
-    setItem({})
+    setItem({});
 
     if (itemAlreadyExists(payload.name)) {
       return;
@@ -43,8 +43,8 @@ export default function SearchItem() {
       autoSelect
       options={items}
       getOptionLabel={(option) => option.name || ''}
-      sx={{ width: '100%'}}
-      renderInput={(params) => <TextField {...params} placeholder="Digite o item" variant="filled"/>}
+      sx={{ width: '100%', '& input::placeholder': { fontSize: '1.1rem', color: 'white' } }}
+      renderInput={(params) => <TextField {...params} placeholder="Digite um produto" variant="filled" sx={{ 'input' : {color: 'white'}}}/>}
       onChange={(e, value) => handleSelected(e, value)}
       value={item}
     />
