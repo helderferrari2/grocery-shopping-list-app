@@ -1,20 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import api from '../../utils/api.service';
 import useListItems from '../../hooks/listItems';
 import SearchItem from '../../components/SearchItem';
 import Speech from '../../components/Speech';
-import { AppBar, Box, Toolbar, IconButton, List, Alert, Container } from '@mui/material';
+import { AppBar, Box, Toolbar, IconButton, List, Alert, Container, Skeleton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SingleItem from '../../components/SingleItem';
 
 export default function ListEdit() {
   const { listId } = useParams();
   const { listItems, setListItems } = useListItems();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-    api.fetchList(listId).then((response) => setListItems(response.data));
+    setLoading(true);
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    api
+      .fetchList(listId)
+      .then((response) => setListItems(response.data))
+      .finally(() => setLoading(false));
   }, [listId, setListItems]);
 
   return (
@@ -30,12 +35,16 @@ export default function ListEdit() {
       </AppBar>
 
       <List sx={{ mt: 8, width: '100%' }} component="nav">
-        {listItems.hasOwnProperty('list_items') && listItems.list_items.length > 0 ? (
-          listItems.list_items.map((item) => <SingleItem key={item.id} item={item} isEdit/>)
+        {loading ? (
+          <>
+            <Skeleton variant="rectangular" height={60} sx={{ m: 1 }} />
+            <Skeleton variant="rectangular" height={60} sx={{ m: 1 }} />
+            <Skeleton variant="rectangular" height={60} sx={{ m: 1 }} />
+          </>
         ) : (
-          <Container sx={{mt: 2}}>
-            <Alert severity="info" >Ops, você não possui nenhum item</Alert>
-          </Container>
+          listItems.hasOwnProperty('list_items') &&
+          listItems.list_items.length > 0 &&
+          listItems.list_items.map((item) => <SingleItem item={item} key={item.id} isEdit />)
         )}
       </List>
     </Box>

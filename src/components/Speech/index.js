@@ -24,12 +24,13 @@ export default function Speech() {
   };
 
   if (!browserSupportsSpeechRecognition) {
-    return <span>Browser doesn't support speech recognition.</span>;
+    return <span>Este navegador não suporta esta funcionalidade.</span>;
   }
 
   const capitalize = (s) => s[0].toUpperCase() + s.slice(1);
 
   const startListening = () => {
+    setError('');
     resetTranscript();
     SpeechRecognition.startListening({ continuous: true });
   };
@@ -51,6 +52,7 @@ export default function Speech() {
     };
 
     if (itemAlreadyExists(payload.name)) {
+      setError('Este item já existe');
       return;
     }
 
@@ -74,9 +76,7 @@ export default function Speech() {
             p: 4,
           }}
         >
-          <Box sx={{ display: 'flex', flex: '1', alignItems: 'center' }}>
-            <h3>Segure para falar</h3>
-          </Box>
+          <Box sx={{ display: 'flex', flex: '1', alignItems: 'center' }}>{error && !listening ? error : transcript}</Box>
           <Box sx={{ display: 'flex', flex: '1', alignItems: 'center' }}>
             <IconButton
               size="large"
@@ -90,7 +90,9 @@ export default function Speech() {
               <KeyboardVoiceIcon sx={{ fontSize: 50 }} />
             </IconButton>
           </Box>
-          <Box sx={{ display: 'flex', flex: '1', alignItems: 'center' }}>{error && !listening ? error : transcript}</Box>
+          <Box sx={{ display: 'flex', flex: '1', alignItems: 'center' }}>
+            <h3>Segure para falar</h3>
+          </Box>
         </Box>
       </Dialog>
     </>

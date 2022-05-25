@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import useListItems from '../../hooks/listItems';
 import { Typography, IconButton, Divider, Box } from '@mui/material';
-
 import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
 import RemoveCircleSharpIcon from '@mui/icons-material/RemoveCircleSharp';
 import CurrencyInput from 'react-currency-input-field';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export default function SingleItem({ item, isEdit = false }) {
   const { handleUpdateItem, handleDeleteItem } = useListItems();
 
   const [price, setPrice] = useState(item.price);
+  const isMobile = useMediaQuery('(max-width:600px)');
 
   const handleDecrease = async (e, item) => {
     e.preventDefault();
@@ -42,12 +43,19 @@ export default function SingleItem({ item, isEdit = false }) {
     await handleUpdateItem(payload);
   };
 
+  const itemTextStyle = {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    maxWidth: '150px',
+  };
+
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', padding: '10px', flex: '1' }}>
         <Box sx={{ flexGrow: '1' }}>
           {isEdit ? (
-            <Typography variant="h6" sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '160px' }}>
+            <Typography variant="h6" sx={isMobile ? itemTextStyle : {}}>
               {item.name}
             </Typography>
           ) : (
@@ -57,10 +65,7 @@ export default function SingleItem({ item, isEdit = false }) {
               sx={{
                 textDecoration: item.checked ? 'line-through' : 'none',
                 cursor: 'pointer',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-                maxWidth: '180px',
+                ...(isMobile && {...itemTextStyle} )
               }}
             >
               {item.name}

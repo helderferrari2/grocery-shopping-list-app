@@ -4,8 +4,9 @@
   "scope": "/",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#7267EF",
+  "theme_color": "#fff",
   "background_color": "#7267EF",
+  "description": "Sua lista de compras online",
   "icons": [
     {
       "src": "favicon.ico",
