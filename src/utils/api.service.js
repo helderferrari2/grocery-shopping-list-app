@@ -1,6 +1,6 @@
 import axios from 'axios';
 import AuthService from './auth.service';
-import useAuth from '../hooks/auth';
+import history from '../utils/history';
 
 // Create axios instance
 const api = axios.create({
@@ -31,8 +31,8 @@ api.interceptors.response.use(
 
     // Unauthenticated
     if (status === 401) {
-      const { logout } = useAuth();
-      logout();
+      AuthService.deleteToken();
+      history.push('login');
     }
 
     // Validation

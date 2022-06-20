@@ -14,7 +14,7 @@ export const AuthContext = createContext({});
 export function AuthProvider({ children }) {
   const [user, setUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return AuthService.getToken() !== null ? true : false;
+    return AuthService.getToken()
   });
 
   const signUp = useCallback(async (payload) => {
@@ -32,19 +32,18 @@ export function AuthProvider({ children }) {
     history.push('home');
   }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     AuthService.deleteToken();
     history.push('login');
-  };
+  }, []);
 
-  //@todo Implementar isso depois para buscar o user da api ao montar o component
-  // const checkUserAuth = useCallback(async() => {
-  //   const response = await api.me()
-  //   console.log('checkUserAuth', response.data)
-  //   return response.data
-  // }, [])
+  const checkUserAuth = useCallback(async() => {
+    const response = await api.me()
+    console.log(response)
+    setUser(response.data);
+  }, [])
 
-  return <AuthContext.Provider value={{ signIn, signUp, logout, isLoggedIn, user }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ signIn, signUp, logout, isLoggedIn, user, checkUserAuth }}>{children}</AuthContext.Provider>;
 }
 
 /**
