@@ -37,13 +37,7 @@ export function AuthProvider({ children }) {
     history.push('login');
   }, []);
 
-  const checkUserAuth = useCallback(async() => {
-    const response = await api.me()
-    console.log(response)
-    setUser(response.data);
-  }, [])
-
-  return <AuthContext.Provider value={{ signIn, signUp, logout, isLoggedIn, user, checkUserAuth }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ signIn, signUp, logout, isLoggedIn, user }}>{children}</AuthContext.Provider>;
 }
 
 /**
