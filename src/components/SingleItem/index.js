@@ -3,7 +3,6 @@ import useListItems from '../../hooks/listItems';
 import { Typography, IconButton, Divider, Box } from '@mui/material';
 import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
 import RemoveCircleSharpIcon from '@mui/icons-material/RemoveCircleSharp';
-import CurrencyInput from 'react-currency-input-field';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 export default function SingleItem({ item, isEdit = false }) {
@@ -38,6 +37,10 @@ export default function SingleItem({ item, isEdit = false }) {
   };
 
   const handlePrice = async (newPrice) => {
+    if (newPrice > 999) {
+      return;
+    }
+
     setPrice(newPrice);
     const payload = { ...item, price: newPrice };
     await handleUpdateItem(payload);
@@ -65,7 +68,7 @@ export default function SingleItem({ item, isEdit = false }) {
               sx={{
                 textDecoration: item.checked ? 'line-through' : 'none',
                 cursor: 'pointer',
-                ...(isMobile && {...itemTextStyle} )
+                ...(isMobile && { ...itemTextStyle }),
               }}
             >
               {item.name}
@@ -82,13 +85,13 @@ export default function SingleItem({ item, isEdit = false }) {
           </IconButton>
         </Box>
         <Box>
-          <CurrencyInput
-            defaultValue={price || 0}
-            decimalsLimit={2}
-            fixedDecimalLength={2}
-            onValueChange={(value) => handlePrice(value)}
-            style={{ border: 'none', fontSize: '20px', maxWidth: '80px' }}
-            prefix="R$ "
+          <span style={{marginRight: 5}}>R$</span>
+          <input
+            type="number"
+            defaultValue={Math.trunc(price) || 0}
+            onChange={(e) => handlePrice(e.target.value)}
+            style={{border: 'none',  fontSize: '20px', maxWidth: '40px'}}
+            inputMode="numeric"
           />
         </Box>
       </Box>
